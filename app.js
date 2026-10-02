@@ -41,7 +41,7 @@
     });
   });
   const galleryImages = [
-    { source: 'assets/combat-full.webp', title: 'Bring the chaos', description: 'Actual Roverhold gameplay: the rover and its deployed headquarters fight together, surrounded by defenses, enemy vehicles and glowing ore.', width: 1080, height: 1920 },
+    { source: 'assets/combat-full.webp', title: 'Bring the chaos', description: 'Actual Roverhold gameplay: the rover and its deployed headquarters with defenses firing across rocky terrain, with glowing ore in the distance.', width: 1080, height: 1920 },
     { source: 'assets/base-full.webp', title: 'Make yourself at home', description: 'The current permanent Main Menu base with evolved turrets, rocket launchers and Tesla defenses.', width: 1080, height: 1920 },
     { source: 'assets/upgrades.webp', title: 'Pick your power trip', description: 'The in-game upgrade menu offers Rockets, Tesla Coil and Energy Shield.', width: 750, height: 1334 },
     { source: 'assets/map.webp', title: 'Find your next fight', description: 'Roverhold level map with interconnected planets and different challenges.', width: 750, height: 1334 }

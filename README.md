@@ -52,7 +52,7 @@ The original game copy, upgrade/map screenshots and artwork came from Daniel95/R
 
 The permanent-base screenshot was captured on 2026-10-02 from the adjacent Unity project at revision `682956b81588c624387c9b1a7214c7fe0edfff1c` (game version 0.3.520). It shows the current Main Menu buildings with menu overlays hidden and the camera framed around the base.
 
-The combat screenshot was refreshed on 2026-10-02 at revision `277a5f582c850276ada6ad933cdd6700751b0f7f` (game version 0.3.520). It shows the rover and its deployed HQ during real combat with rockets, turret fire, enemies and glowing ore. All gameplay canvases were disabled temporarily for the capture, hiding the HUD, health bars and floating numbers. The unmodified 1080×1920 source is retained in `.preview/action-2.png`.
+The combat screenshot was refreshed on 2026-10-02 at revision `277a5f582c850276ada6ad933cdd6700751b0f7f` (game version 0.3.525). It shows actual Level 2 gameplay on rocky terrain, with the rover, deployed HQ and defenses clearly visible between weapon volleys. All gameplay canvases were disabled temporarily for the capture, hiding the HUD, health bars and floating numbers. The unmodified 1080×1920 source is retained in `.preview/desert-combat-1.png`; earlier capture originals are also preserved.
 
 Both captures used the existing save in isolated `ExistingReadOnly` Editor sessions with saving disabled and high graphics quality. Unity's original scene and preview settings were restored after capture; no game source or assets were edited.
 
