@@ -2,3 +2,6 @@
 Thumbs.db
 .env
 .env.*
+.preview/
+# Keep the supplied master locally; publish the optimized web copy.
+assets/roverhold-trailer-sfx-shot-level-v11.mp4
