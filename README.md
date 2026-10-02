@@ -50,7 +50,11 @@ Run `python -m http.server 8000` from this directory and open http://localhost:8
 
 The original game copy, upgrade/map screenshots and artwork came from Daniel95/Roverhold at commit 277a5f582c850276ada6ad933cdd6700751b0f7f. Gameplay content is based on the repository's beginner guide. Exo 2's font license is included in `assets/OFL.txt`.
 
-Combat and permanent-base screenshots were captured on 2026-10-02 from the adjacent Unity project at revision `682956b81588c624387c9b1a7214c7fe0edfff1c` (game version 0.3.520). The capture used the existing save in an isolated `ExistingReadOnly` Editor session; saving was disabled. Combat shows the rover and its deployed HQ during a real level. The base image shows the current Main Menu buildings with menu overlays hidden and the camera framed around the base. High graphics quality was used for both. Unity's original scene and preview settings were restored after capture; no game source or assets were edited.
+The permanent-base screenshot was captured on 2026-10-02 from the adjacent Unity project at revision `682956b81588c624387c9b1a7214c7fe0edfff1c` (game version 0.3.520). It shows the current Main Menu buildings with menu overlays hidden and the camera framed around the base.
+
+The combat screenshot was refreshed on 2026-10-02 at revision `277a5f582c850276ada6ad933cdd6700751b0f7f` (game version 0.3.520). It shows the rover and its deployed HQ during real combat with rockets, turret fire, enemies and glowing ore. All gameplay canvases were disabled temporarily for the capture, hiding the HUD, health bars and floating numbers. The unmodified 1080×1920 source is retained in `.preview/action-2.png`.
+
+Both captures used the existing save in isolated `ExistingReadOnly` Editor sessions with saving disabled and high graphics quality. Unity's original scene and preview settings were restored after capture; no game source or assets were edited.
 
 `combat.webp` and `base.webp` are 720×1280 display copies. Their `-full.webp` versions retain 1080×1920 resolution and load only when the screenshot viewer opens. Images retain their proportions and are shown without cropping. The upgrade and map images remain unchanged.
 
