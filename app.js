@@ -15,9 +15,9 @@
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
   const weaponDetails = {
-    turret: { title: 'The trusty troublemaker.', description: 'Your reliable starting point for making things explode. Invest in damage, firing speed and projectile upgrades to keep the pressure on.', flavor: 'A classic for a very good reason.', artwork: 'assets/turret.webp', artworkDescription: 'Main Turret upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
-    orbit: { title: 'Personal space, enforced.', description: 'Surround your rover with orbiting weapons and give nearby enemies something to worry about. Upgrade your orbit to put more firepower around you.', flavor: 'Please remain outside the danger circle.', artwork: 'assets/orbit.webp', artworkDescription: 'Orbit weapon upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
-    shield: { title: 'A little breathing room.', description: 'Absorb incoming damage with an Energy Shield. Improve its protection and regeneration so you can stay in the fight a little longer.', flavor: 'Because dodging absolutely everything is ambitious.', artwork: 'assets/shield.webp', artworkDescription: 'Energy Shield upgrade artwork from Roverhold', kind: 'ROVER DEFENSE' }
+    turret: { title: 'The trusty troublemaker.', description: 'Your reliable starting point for making things explode. Invest in damage, firing speed and projectile upgrades to keep the pressure on.', artwork: 'assets/turret.webp', artworkDescription: 'Main Turret upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
+    orbit: { title: 'Personal space, enforced.', description: 'Surround your rover with orbiting weapons and give nearby enemies something to worry about. Upgrade your orbit to put more firepower around you.', artwork: 'assets/orbit.webp', artworkDescription: 'Orbit weapon upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
+    shield: { title: 'A little breathing room.', description: 'Absorb incoming damage with an Energy Shield. Improve its protection and regeneration so you can stay in the fight a little longer.', artwork: 'assets/shield.webp', artworkDescription: 'Energy Shield upgrade artwork from Roverhold', kind: 'ROVER DEFENSE' }
   };
   const weaponButtons = Array.from(document.querySelectorAll('[data-weapon]'));
   weaponButtons.forEach(weaponButton => {
@@ -32,7 +32,6 @@
       });
       document.querySelector('#weapon-title').textContent = selectedWeapon.title;
       document.querySelector('#weapon-description').textContent = selectedWeapon.description;
-      document.querySelector('#weapon-flavor').textContent = selectedWeapon.flavor;
       document.querySelector('#weapon-kind').textContent = selectedWeapon.kind;
       const weaponImage = document.querySelector('#weapon-image');
       weaponImage.src = selectedWeapon.artwork;
@@ -41,10 +40,10 @@
     });
   });
   const galleryImages = [
-    { source: 'assets/combat-full.webp', title: 'Bring the chaos', description: 'Actual Roverhold gameplay: the rover and its deployed headquarters with defenses firing across rocky terrain, with glowing ore in the distance.', width: 1080, height: 1920 },
-    { source: 'assets/base-full.webp', title: 'Make yourself at home', description: 'The current permanent Main Menu base with evolved turrets, rocket launchers and Tesla defenses.', width: 1080, height: 1920 },
-    { source: 'assets/upgrades.webp', title: 'Pick your power trip', description: 'The in-game upgrade menu offers Rockets, Tesla Coil and Energy Shield.', width: 750, height: 1334 },
-    { source: 'assets/map.webp', title: 'Find your next fight', description: 'Roverhold level map with interconnected planets and different challenges.', width: 750, height: 1334 }
+    { source: 'assets/combat-full.webp', title: 'Combat', description: 'Actual Roverhold gameplay: the rover and its deployed headquarters with defenses firing across rocky terrain, with glowing ore in the distance.', width: 1080, height: 1920 },
+    { source: 'assets/base-full.webp', title: 'Permanent base', description: 'The current permanent Main Menu base with evolved turrets, rocket launchers and Tesla defenses.', width: 1080, height: 1920 },
+    { source: 'assets/upgrades.webp', title: 'Upgrades', description: 'The in-game upgrade menu offers Rockets, Tesla Coil and Energy Shield.', width: 750, height: 1334 },
+    { source: 'assets/map.webp', title: 'Level map', description: 'Roverhold level map with interconnected planets and different challenges.', width: 750, height: 1334 }
   ];
   const screenshotDialog = document.querySelector('#screenshot-dialog');
   const lightboxImage = document.querySelector('#lightbox-image');
