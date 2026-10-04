@@ -5,6 +5,7 @@ The official Roverhold game website. Static HTML, CSS and JavaScript, ready for 
 ## Files
 
 - `index.html`: website structure and copy
+- `privacy-policy.html`: privacy policy for the game and website
 - `styles.css`: responsive styles
 - `app.js`: weapon selector, mobile navigation and screenshot viewer
 - `assets/`: actual game screenshots, trailer, icons and local fonts
