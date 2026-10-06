@@ -63,14 +63,18 @@ These captures used the existing save in isolated `ExistingReadOnly` Editor sess
 
 ## Trailer delivery
 
-The supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` is the original 1080×1920, 42-second trailer (58,528,332 bytes). It is left untouched locally and ignored by Git. The published `assets/trailer.mp4` is a 720×1280 H.264/AAC web copy (16,500,947 bytes), about 72% smaller. Its shots, timing, music and sound effects are preserved. MP4 metadata is placed at the start of the file for progressive playback.
+The current trailer is the supplied **Fortress Progression v13** render with larger outlined subtitles, from the adjacent Unity project's trailer work at commit `761998a54`. Its unmodified 1080×1920, 42-second master (58,569,765 bytes) is retained in `.preview/roverhold-fortress-progression-large-subtitles.mp4`, with SHA-256 `9d27fb2e08d92ab5d85794891dcfc470a1fe559241d18bce6ba0599d863acbc6`.
 
-The native video player uses `controls`, `playsinline`, `muted`, `loop` and `preload="none"`. Only the lightweight WebP poster is fetched until playback begins. JavaScript starts playback when at least 25% of the video is in view, pauses it below that threshold or when the browser tab is hidden, and resumes from the same position when it becomes visible again. The **Turn sound on** button and native volume controls let visitors enable or mute sound; their choice is kept while scrolling. If autoplay is blocked or visibility observation is unavailable, the native controls still allow manual playback. The poster is an actual frame at 26 seconds.
+The published `assets/trailer.mp4` is a 720×1280 H.264 Main/AAC web copy (19,214,646 bytes), about 67% smaller. All 1,260 video frames retain the 30 FPS cut and subtitle timing. The supplied audio stream is copied without re-encoding; its packet hash matches the master. MP4 metadata is placed at the start of the file for progressive playback. Video and poster URLs use a `20261006-v13` version query to refresh cached media.
+
+The previous web video and poster are preserved in `.preview/trailer-before-v13.mp4` and `.preview/trailer-poster-before-v13.webp`. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` also remains untouched locally and ignored by Git.
+
+The native video player uses `controls`, `playsinline`, `muted`, `loop` and `preload="none"`. Only the 157,098-byte WebP poster is fetched until playback begins. JavaScript starts playback when at least 25% of the video is in view, pauses it below that threshold or when the browser tab is hidden, and resumes from the same position when it becomes visible again. The **Turn sound on** button and native volume controls let visitors enable or mute sound; their choice is kept while scrolling. If autoplay is blocked or visibility observation is unavailable, the native controls still allow manual playback. The poster is an actual frame at 26 seconds from v13, including its larger subtitle.
 
 The web copy was made with FFmpeg; this is an optional media preparation tool, not a website runtime or build dependency:
 
 ```powershell
-ffmpeg -i assets/roverhold-trailer-sfx-shot-level-v11.mp4 -map 0:v:0 -map 0:a:0 -vf scale=720:1280 -c:v libx264 -preset medium -crf 24 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart assets/trailer.mp4
+ffmpeg -i .preview/roverhold-fortress-progression-large-subtitles.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=42" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/trailer.mp4
 ```
 
 Temporary capture originals, tools and preview artifacts live in the ignored `.preview/` folder. Keep original media when preparing new website copies. No store download URLs or release dates have been supplied.
