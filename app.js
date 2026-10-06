@@ -14,6 +14,44 @@
   mainNavigation.querySelectorAll('a').forEach(navigationLink => navigationLink.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
+  const trailerVideo = document.querySelector('.trailer-player video');
+  const trailerSoundToggle = document.querySelector('.trailer-sound-toggle');
+  const updateTrailerSoundLabel = () => {
+    const isSilent = trailerVideo.muted || trailerVideo.volume === 0;
+    trailerSoundToggle.textContent = isSilent ? 'Turn sound on' : 'Mute sound';
+  };
+  trailerSoundToggle.hidden = false;
+  trailerSoundToggle.addEventListener('click', () => {
+    const isSilent = trailerVideo.muted || trailerVideo.volume === 0;
+    trailerVideo.muted = !isSilent;
+    if (isSilent && trailerVideo.volume === 0) trailerVideo.volume = 1;
+    updateTrailerSoundLabel();
+  });
+  trailerVideo.addEventListener('volumechange', updateTrailerSoundLabel);
+  updateTrailerSoundLabel();
+  if ('IntersectionObserver' in window) {
+    let isTrailerVisible = false;
+    const updateTrailerPlayback = () => {
+      if (!isTrailerVisible || document.hidden) {
+        trailerVideo.pause();
+        return;
+      }
+      if (trailerVideo.paused) {
+        trailerVideo.play().catch(() => {
+          // If autoplay is blocked, the native play controls remain available.
+        });
+      }
+    };
+    const trailerVisibilityObserver = new IntersectionObserver(([entry]) => {
+      isTrailerVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+      updateTrailerPlayback();
+    }, { threshold: [0, 0.25] });
+    trailerVisibilityObserver.observe(trailerVideo);
+    document.addEventListener('visibilitychange', updateTrailerPlayback);
+    trailerVideo.addEventListener('play', () => {
+      if (!isTrailerVisible || document.hidden) trailerVideo.pause();
+    });
+  }
   const weaponDetails = {
     turret: { title: 'The trusty troublemaker.', description: 'Your reliable starting point for making things explode. Invest in damage, firing speed and projectile upgrades to keep the pressure on.', artwork: 'assets/turret.webp', artworkDescription: 'Main Turret upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
     orbit: { title: 'Personal space, enforced.', description: 'Surround your rover with orbiting weapons and give nearby enemies something to worry about. Upgrade your orbit to put more firepower around you.', artwork: 'assets/orbit.webp', artworkDescription: 'Orbit weapon upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },

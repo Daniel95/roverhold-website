@@ -27,6 +27,11 @@
 .trailer-player video:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
 .trailer-player>p{padding:14px 16px;text-align:center;color:var(--muted);font-size:.85rem;line-height:1.6}
 .trailer-player>p a{text-decoration:underline;text-underline-offset:3px;color:var(--blue)}
+.trailer-controls{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 20px}
+.trailer-sound-toggle{border:1px solid var(--line);border-radius:6px;padding:6px 12px;background:#1c2d43;color:var(--white);font:inherit;cursor:pointer}
+.trailer-sound-toggle:hover{border-color:var(--blue);color:var(--blue)}
+.trailer-sound-toggle:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.trailer-sound-toggle[hidden]{display:none}
 .hero-screen img,.base-image img,.gallery-image>img{object-fit:contain}
 .gallery-image{aspect-ratio:9/16;background:#080f20}
 .base-image{height:auto;aspect-ratio:9/16;background:#183259}

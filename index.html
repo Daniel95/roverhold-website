@@ -11,8 +11,8 @@
   <title>ROVERHOLD | Build. Move. Survive.</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111a31'/%3E%3Cpath d='M16 48V16h22q12 0 12 11 0 8-8 11l10 10H38L27 35v13zm11-23v7h9q4 0 4-4t-4-3z' fill='%237275ff'/%3E%3C/svg%3E">
   <link rel="preload" href="assets/exo-bold.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js?v=20261005-upgrades" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261006-trailer">
+  <script src="app.js?v=20261006-trailer" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -54,11 +54,11 @@
         </div>
         <figure class="trailer-player">
           <figcaption>ACTUAL GAMEPLAY</figcaption>
-          <video controls playsinline preload="none" poster="assets/trailer-poster.webp" width="720" height="1280" aria-label="Roverhold gameplay trailer">
+          <video controls playsinline muted loop preload="none" poster="assets/trailer-poster.webp" width="720" height="1280" aria-label="Roverhold gameplay trailer">
             <source src="assets/trailer.mp4" type="video/mp4">
             <a href="assets/trailer.mp4">Watch the Roverhold trailer</a>
           </video>
-          <p><a href="assets/trailer.mp4">Open trailer</a></p>
+          <p class="trailer-controls"><button class="trailer-sound-toggle" type="button" hidden>Turn sound on</button><a href="assets/trailer.mp4">Open trailer</a></p>
         </figure>
       </div>
     </section>

@@ -7,7 +7,7 @@ The official Roverhold game website. Static HTML, CSS and JavaScript, ready for 
 - `index.html`: website structure and copy
 - `privacy-policy.html`: privacy policy for the game and website
 - `styles.css`: responsive styles
-- `app.js`: weapon selector, mobile navigation and screenshot viewer
+- `app.js`: trailer playback, weapon selector, mobile navigation and screenshot viewer
 - `assets/`: actual game screenshots, trailer, icons and local fonts
 - `CNAME`: custom domain, roverhold.com
 - `.nojekyll`: serve these files directly without Jekyll
@@ -65,7 +65,7 @@ These captures used the existing save in isolated `ExistingReadOnly` Editor sess
 
 The supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` is the original 1080×1920, 42-second trailer (58,528,332 bytes). It is left untouched locally and ignored by Git. The published `assets/trailer.mp4` is a 720×1280 H.264/AAC web copy (16,500,947 bytes), about 72% smaller. Its shots, timing, music and sound effects are preserved. MP4 metadata is placed at the start of the file for progressive playback.
 
-The native video player uses `controls`, `playsinline` and `preload="none"`, with no autoplay. Only the lightweight WebP poster is fetched before the visitor starts playback. The poster is an actual frame at 26 seconds. An **Open trailer** link also gives direct access to the video.
+The native video player uses `controls`, `playsinline`, `muted`, `loop` and `preload="none"`. Only the lightweight WebP poster is fetched until playback begins. JavaScript starts playback when at least 25% of the video is in view, pauses it below that threshold or when the browser tab is hidden, and resumes from the same position when it becomes visible again. The **Turn sound on** button and native volume controls let visitors enable or mute sound; their choice is kept while scrolling. If autoplay is blocked or visibility observation is unavailable, the native controls still allow manual playback. The poster is an actual frame at 26 seconds. An **Open trailer** link also gives direct access to the video.
 
 The web copy was made with FFmpeg; this is an optional media preparation tool, not a website runtime or build dependency:
 
