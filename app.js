@@ -14,44 +14,69 @@
   mainNavigation.querySelectorAll('a').forEach(navigationLink => navigationLink.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
-  const trailerVideo = document.querySelector('.trailer-player video');
-  const trailerSoundToggle = document.querySelector('.trailer-sound-toggle');
-  const updateTrailerSoundLabel = () => {
-    const isSilent = trailerVideo.muted || trailerVideo.volume === 0;
-    trailerSoundToggle.textContent = isSilent ? 'Turn sound on' : 'Mute sound';
+  const trailerPlayers = Array.from(document.querySelectorAll('.trailer-player')).map(container => ({
+    video: container.querySelector('video'),
+    soundToggle: container.querySelector('.trailer-sound-toggle'),
+    isVisible: false
+  }));
+  const observesTrailerVisibility = 'IntersectionObserver' in window;
+  let activeTrailer = null;
+  const pauseOtherTrailers = selectedTrailer => {
+    trailerPlayers.forEach(player => { if (player !== selectedTrailer) player.video.pause(); });
   };
-  trailerSoundToggle.hidden = false;
-  trailerSoundToggle.addEventListener('click', () => {
-    const isSilent = trailerVideo.muted || trailerVideo.volume === 0;
-    trailerVideo.muted = !isSilent;
-    if (isSilent && trailerVideo.volume === 0) trailerVideo.volume = 1;
-    updateTrailerSoundLabel();
-  });
-  trailerVideo.addEventListener('volumechange', updateTrailerSoundLabel);
-  updateTrailerSoundLabel();
-  if ('IntersectionObserver' in window) {
-    let isTrailerVisible = false;
-    const updateTrailerPlayback = () => {
-      if (!isTrailerVisible || document.hidden) {
-        trailerVideo.pause();
-        return;
-      }
-      if (trailerVideo.paused) {
-        trailerVideo.play().catch(() => {
-          // If autoplay is blocked, the native play controls remain available.
-        });
+  const updateTrailerPlayback = () => {
+    const nextTrailer = document.hidden ? null :
+      activeTrailer?.isVisible ? activeTrailer : trailerPlayers.find(player => player.isVisible) || null;
+    if (nextTrailer === activeTrailer) return;
+    activeTrailer = nextTrailer;
+    pauseOtherTrailers(activeTrailer);
+    if (activeTrailer) {
+      activeTrailer.video.play().catch(() => {
+        // If autoplay is blocked, native play controls remain available.
+      });
+    }
+  };
+  trailerPlayers.forEach(player => {
+    const { video, soundToggle } = player;
+    const updateSoundLabel = () => {
+      const isSilent = video.muted || video.volume === 0;
+      const soundAction = isSilent ? 'Turn sound on' : 'Mute sound';
+      soundToggle.textContent = soundAction;
+      soundToggle.setAttribute('aria-label', `${soundAction} for ${video.getAttribute('aria-label')}`);
+      if (!isSilent) {
+        trailerPlayers.forEach(otherPlayer => { if (otherPlayer !== player) otherPlayer.video.muted = true; });
       }
     };
-    const trailerVisibilityObserver = new IntersectionObserver(([entry]) => {
-      isTrailerVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+    soundToggle.hidden = false;
+    soundToggle.addEventListener('click', () => {
+      const isSilent = video.muted || video.volume === 0;
+      video.muted = !isSilent;
+      if (isSilent && video.volume === 0) video.volume = 1;
+      updateSoundLabel();
+    });
+    video.addEventListener('volumechange', updateSoundLabel);
+    video.addEventListener('play', () => {
+      if (video.paused) return;
+      if (document.hidden || (observesTrailerVisibility && !player.isVisible)) {
+        video.pause();
+        return;
+      }
+      activeTrailer = player;
+      pauseOtherTrailers(player);
+    });
+    updateSoundLabel();
+  });
+  if (observesTrailerVisibility) {
+    const trailerVisibilityObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const player = trailerPlayers.find(candidate => candidate.video === entry.target);
+        player.isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+      });
       updateTrailerPlayback();
     }, { threshold: [0, 0.25] });
-    trailerVisibilityObserver.observe(trailerVideo);
-    document.addEventListener('visibilitychange', updateTrailerPlayback);
-    trailerVideo.addEventListener('play', () => {
-      if (!isTrailerVisible || document.hidden) trailerVideo.pause();
-    });
+    trailerPlayers.forEach(player => trailerVisibilityObserver.observe(player.video));
   }
+  document.addEventListener('visibilitychange', updateTrailerPlayback);
   const weaponDetails = {
     turret: { title: 'The trusty troublemaker.', description: 'Your reliable starting point for making things explode. Invest in damage, firing speed and projectile upgrades to keep the pressure on.', artwork: 'assets/turret.webp', artworkDescription: 'Main Turret upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
     orbit: { title: 'Personal space, enforced.', description: 'Surround your rover with orbiting weapons and give nearby enemies something to worry about. Upgrade your orbit to put more firepower around you.', artwork: 'assets/orbit.webp', artworkDescription: 'Orbit weapon upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },

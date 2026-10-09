@@ -63,18 +63,33 @@ These captures used the existing save in isolated `ExistingReadOnly` Editor sess
 
 ## Trailer delivery
 
-The current trailer is the supplied **Fortress Progression v13** render with larger outlined subtitles, from the adjacent Unity project's trailer work at commit `761998a54`. Its unmodified 1080×1920, 42-second master (58,569,765 bytes) is retained in `.preview/roverhold-fortress-progression-large-subtitles.mp4`, with SHA-256 `9d27fb2e08d92ab5d85794891dcfc470a1fe559241d18bce6ba0599d863acbc6`.
+The local website update contains two complementary trailers from the adjacent Unity project's media work at commit `5f99f2a57`:
 
-The published `assets/trailer.mp4` is a 720×1280 H.264 Main/AAC web copy (19,214,646 bytes), about 67% smaller. All 1,260 video frames retain the 30 FPS cut and subtitle timing. The supplied audio stream is copied without re-encoding; its packet hash matches the master. MP4 metadata is placed at the start of the file for progressive playback. Video and poster URLs use a `20261006-v13` version query to refresh cached media.
+| Website placement | Supplied master | Website video | Web size | Poster frame |
+| --- | --- | --- | --- | --- |
+| After the hero: Gameplay & Action | Showcase V15, 42 seconds | `assets/trailer.mp4` | 19,208,769 bytes | 3.5 seconds: Fight the machines |
+| In Your Base: Base Building & Progression | Galactic Progression V9, 45 seconds | `assets/base-trailer.mp4` | 16,221,757 bytes | 7 seconds: settled base growth |
 
-The previous web video and poster are preserved in `.preview/trailer-before-v13.mp4` and `.preview/trailer-poster-before-v13.webp`. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` also remains untouched locally and ignored by Git.
+Both masters remain unchanged outside the repository and are also retained in the ignored `.preview/two-trailers-20261009/` folder as `action-master-v15.mp4` and `base-master-v9.mp4`. Their SHA-256 hashes are:
 
-The native video player uses `controls`, `playsinline`, `muted`, `loop` and `preload="none"`. Only the 157,098-byte WebP poster is fetched until playback begins. JavaScript starts playback when at least 25% of the video is in view, pauses it below that threshold or when the browser tab is hidden, and resumes from the same position when it becomes visible again. The **Turn sound on** button and native volume controls let visitors enable or mute sound; their choice is kept while scrolling. If autoplay is blocked or visibility observation is unavailable, the native controls still allow manual playback. The poster is an actual frame at 26 seconds from v13, including its larger subtitle.
+- Action V15: `f9cd97f3a935ae26d3529e09ac1341cd9a9eba2e0253a3203b8d3cbc5e24c0d1`
+- Base V9: `4239f29116f96e40332af32b3645a0d24be2bcacfe94e1caaab1cb25f0184c5f`
 
-The web copy was made with FFmpeg; this is an optional media preparation tool, not a website runtime or build dependency:
+The website copies are 720x1280 H.264 Main/AAC at 30 FPS, approximately 67% and 73% smaller than their masters. The cuts, burned-in captions and all 1,260/1,350 video frames retain their timing. Audio is copied without re-encoding; each copied audio packet hash matches its master. Both MP4 files place metadata before video data for progressive playback. The matching WebP posters are 132,284 and 133,222 bytes.
+
+The action trailer stays immediately after the hero to introduce combat. The progression trailer sits beside the existing explanation of permanent base growth and movement. The base screenshot remains in the hero and gallery. On mobile, the base copy comes first, followed by its video and then the next-section button, so the button does not skip the progression footage.
+
+Each player keeps native controls, inline portrait playback, muted looping and `preload="none"`. Only posters load before playback. One shared visibility observer allows at most one trailer to play; the current visible player keeps priority until it leaves view, and both pause when the browser tab is hidden. Native play and sound controls also stop or mute competing trailers. Manual pause is respected while the same player remains visible. If autoplay is blocked or observation is unsupported, native controls remain available. Visitors stay on the page; no standalone-video link is offered.
+
+Cache versions are `20261009-action-v15` for the primary video/poster and `20261009-base-v9` for the progression video/poster. The HTML also versions the updated JavaScript and CSS as `20261009-two-trailers`.
+
+Previous website media and verification artifacts remain under `.preview/`, including `two-trailers-20261009/previous-action-v13-web.mp4` and its poster. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remains untouched and ignored by Git.
+
+FFmpeg is an optional media preparation tool, not a website runtime or build dependency. The two copies use the same settings, with the video trim matching each supplied duration:
 
 ```powershell
-ffmpeg -i .preview/roverhold-fortress-progression-large-subtitles.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=42" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/trailer.mp4
+ffmpeg -i .preview/two-trailers-20261009/action-master-v15.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=42" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/trailer.mp4
+ffmpeg -i .preview/two-trailers-20261009/base-master-v9.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=45" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/base-trailer.mp4
 ```
 
-Temporary capture originals, tools and preview artifacts live in the ignored `.preview/` folder. Keep original media when preparing new website copies. No store download URLs or release dates have been supplied.
+Temporary masters, review captures, tools and media/playback verification reports live in the ignored `.preview/` folder. Keep original media when preparing new website copies. No store download URLs or release dates have been supplied.
