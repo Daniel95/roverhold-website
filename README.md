@@ -63,33 +63,33 @@ These captures used the existing save in isolated `ExistingReadOnly` Editor sess
 
 ## Trailer delivery
 
-The local website update contains two complementary trailers from the adjacent Unity project's media work at commit `5f99f2a57`:
+The website contains two complementary trailers from the adjacent Unity project: Gameplay & Action (Showcase V15, commit `5f99f2a57`) and Game Overview (Galactic Progression V12, commit `f14cb2412`).
 
 | Website placement | Supplied master | Website video | Web size | Poster frame |
 | --- | --- | --- | --- | --- |
 | After the hero: Gameplay & Action | Showcase V15, 42 seconds | `assets/trailer.mp4` | 19,208,769 bytes | 3.5 seconds: Fight the machines |
-| In Your Base: Base Building & Progression | Galactic Progression V9, 45 seconds | `assets/base-trailer.mp4` | 16,221,757 bytes | 7 seconds: settled base growth |
+| In Your Base: Base Building & Progression | Game Overview / Galactic Progression V12, 45 seconds | `assets/base-trailer.mp4` | 14,734,307 bytes | 7 seconds: settled base growth |
 
-Both masters remain unchanged outside the repository and are also retained in the ignored `.preview/two-trailers-20261009/` folder as `action-master-v15.mp4` and `base-master-v9.mp4`. Their SHA-256 hashes are:
+Both supplied masters remain unchanged outside the repository. Local archive copies are retained in the ignored `.preview/two-trailers-20261009/action-master-v15.mp4` and `.preview/base-trailer-v12-20261010/base-master-v12.mp4`. Their SHA-256 hashes are:
 
 - Action V15: `f9cd97f3a935ae26d3529e09ac1341cd9a9eba2e0253a3203b8d3cbc5e24c0d1`
-- Base V9: `4239f29116f96e40332af32b3645a0d24be2bcacfe94e1caaab1cb25f0184c5f`
+- Base V12: `6da7c15a12a44cae6588df7dcfd136504534eb3c941438bae431c21dd71f9701`
 
-The website copies are 720x1280 H.264 Main/AAC at 30 FPS, approximately 67% and 73% smaller than their masters. The cuts, burned-in captions and all 1,260/1,350 video frames retain their timing. Audio is copied without re-encoding; each copied audio packet hash matches its master. Both MP4 files place metadata before video data for progressive playback. The matching WebP posters are 132,284 and 133,222 bytes.
+The website copies are 720x1280 H.264 Main/AAC at 30 FPS, approximately 67% and 75% smaller than their masters. The cuts, burned-in captions and all 1,260/1,350 video frames retain their timing. Audio is copied without re-encoding; each copied audio packet hash matches its master. Both MP4 files place metadata before video data for progressive playback. The matching WebP posters are 132,284 and 113,846 bytes.
 
 The action trailer stays immediately after the hero to introduce combat. The progression trailer sits beside the existing explanation of permanent base growth and movement. The base screenshot remains in the hero and gallery. On mobile, the base copy comes first, followed by its video and then the next-section button, so the button does not skip the progression footage.
 
 Each player keeps native controls, inline portrait playback, muted looping and `preload="none"`. Only posters load before playback. One shared visibility observer allows at most one trailer to play; the current visible player keeps priority until it leaves view, and both pause when the browser tab is hidden. Native play and sound controls also stop or mute competing trailers. Manual pause is respected while the same player remains visible. If autoplay is blocked or observation is unsupported, native controls remain available. Visitors stay on the page; no standalone-video link is offered.
 
-Cache versions are `20261009-action-v15` for the primary video/poster and `20261009-base-v9` for the progression video/poster. The HTML also versions the updated JavaScript and CSS as `20261009-two-trailers`.
+Cache versions are `20261009-action-v15` for the primary video/poster and `20261010-base-v12` for the progression video/poster. The HTML also versions the updated JavaScript and CSS as `20261009-two-trailers`.
 
-Previous website media and verification artifacts remain under `.preview/`, including `two-trailers-20261009/previous-action-v13-web.mp4` and its poster. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remains untouched and ignored by Git.
+Previous website media and verification artifacts remain under `.preview/`, including `two-trailers-20261009/previous-action-v13-web.mp4` and its poster, plus `base-trailer-v12-20261010/previous-base-v9-web.mp4` and its poster. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remains untouched and ignored by Git.
 
 FFmpeg is an optional media preparation tool, not a website runtime or build dependency. The two copies use the same settings, with the video trim matching each supplied duration:
 
 ```powershell
 ffmpeg -i .preview/two-trailers-20261009/action-master-v15.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=42" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/trailer.mp4
-ffmpeg -i .preview/two-trailers-20261009/base-master-v9.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=45" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/base-trailer.mp4
+ffmpeg -i .preview/base-trailer-v12-20261010/base-master-v12.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos,fps=30,trim=duration=45" -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/base-trailer.mp4
 ```
 
 Temporary masters, review captures, tools and media/playback verification reports live in the ignored `.preview/` folder. Keep original media when preparing new website copies. No store download URLs or release dates have been supplied.
