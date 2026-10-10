@@ -81,7 +81,7 @@ The action trailer stays immediately after the hero to introduce combat. The pro
 
 Each player keeps native controls, inline portrait playback, muted looping and `preload="none"`. Only posters load before playback. One shared visibility observer allows at most one trailer to play; the current visible player keeps priority until it leaves view, and both pause when the browser tab is hidden. Native play and sound controls also stop or mute competing trailers. Manual pause is respected while the same player remains visible. If autoplay is blocked or observation is unsupported, native controls remain available. Visitors stay on the page; no standalone-video link is offered.
 
-Cache versions are `20261009-action-v15` for the primary video/poster and `20261010-base-v12` for the progression video/poster. The HTML also versions the updated JavaScript and CSS as `20261009-two-trailers`.
+Cache versions are `20261009-action-v15` for the primary video/poster and `20261010-base-v12` for the progression video/poster. The HTML also versions the updated JavaScript and CSS as `20261010-copy`.
 
 Previous website media and verification artifacts remain under `.preview/`, including `two-trailers-20261009/previous-action-v13-web.mp4` and its poster, plus `base-trailer-v12-20261010/previous-base-v9-web.mp4` and its poster. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remains untouched and ignored by Git.
 

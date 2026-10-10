@@ -78,9 +78,9 @@
   }
   document.addEventListener('visibilitychange', updateTrailerPlayback);
   const weaponDetails = {
-    turret: { title: 'The trusty troublemaker.', description: 'Your reliable starting point for making things explode. Invest in damage, firing speed and projectile upgrades to keep the pressure on.', artwork: 'assets/turret.webp', artworkDescription: 'Main Turret upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
-    orbit: { title: 'Personal space, enforced.', description: 'Surround your rover with orbiting weapons and give nearby enemies something to worry about. Upgrade your orbit to put more firepower around you.', artwork: 'assets/orbit.webp', artworkDescription: 'Orbit weapon upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
-    shield: { title: 'A little breathing room.', description: 'Absorb incoming damage with an Energy Shield. Improve its protection and regeneration so you can stay in the fight a little longer.', artwork: 'assets/shield.webp', artworkDescription: 'Energy Shield upgrade artwork from Roverhold', kind: 'ROVER DEFENSE' }
+    turret: { title: 'Main Turret', description: 'Upgrade your main turret’s damage, firing speed and projectiles.', artwork: 'assets/turret.webp', artworkDescription: 'Main Turret upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
+    orbit: { title: 'Orbit Weapons', description: 'Surround your rover with orbiting weapons and upgrade their firepower.', artwork: 'assets/orbit.webp', artworkDescription: 'Orbit weapon upgrade artwork from Roverhold', kind: 'ROVER WEAPON' },
+    shield: { title: 'Energy Shield', description: 'Absorb incoming damage. Upgrade the shield’s protection and regeneration.', artwork: 'assets/shield.webp', artworkDescription: 'Energy Shield upgrade artwork from Roverhold', kind: 'ROVER DEFENSE' }
   };
   const weaponButtons = Array.from(document.querySelectorAll('[data-weapon]'));
   weaponButtons.forEach(weaponButton => {
