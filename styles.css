@@ -24,11 +24,11 @@
 .trailer-player figcaption{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;background:#1c2d43;color:var(--blue);font-size:.75rem;font-weight:700;letter-spacing:.08em}
 .trailer-player video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#080f20}
 .trailer-player video:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
-.trailer-player>p{padding:14px 16px;text-align:center;color:var(--muted);font-size:.85rem;line-height:1.6}
-.trailer-sound-toggle{border:1px solid var(--line);border-radius:6px;padding:6px 12px;background:#1c2d43;color:var(--white);font:inherit;cursor:pointer}
-.trailer-sound-toggle:hover{border-color:var(--blue);color:var(--blue)}
-.trailer-sound-toggle:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
-.trailer-sound-toggle[hidden]{display:none}
+.trailer-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:12px 10px;color:var(--muted);font-size:.85rem;line-height:1.6}
+.trailer-control{min-height:44px;border:1px solid var(--line);border-radius:6px;padding:8px 12px;background:#1c2d43;color:var(--white);font:inherit;cursor:pointer}
+.trailer-control:hover{border-color:var(--blue);color:var(--blue)}
+.trailer-control:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.trailer-control[hidden]{display:none}
 .hero-screen img,.gallery-image>img{object-fit:contain}
 .gallery-image{aspect-ratio:9/16;background:#080f20}
 

@@ -17,16 +17,32 @@
   const trailerPlayers = Array.from(document.querySelectorAll('.trailer-player')).map(container => ({
     video: container.querySelector('video'),
     soundToggle: container.querySelector('.trailer-sound-toggle'),
-    isVisible: false
+    playToggle: container.querySelector('.trailer-play-toggle'),
+    controlsToggle: container.querySelector('.trailer-controls-toggle'),
+    showsNativeControls: false,
+    isVisible: false,
+    canAutoplay: false
   }));
   const observesTrailerVisibility = 'IntersectionObserver' in window;
+  const mobileTrailerControls = 'matchMedia' in window ? window.matchMedia('(pointer: coarse), (max-width: 640px)') : null;
+  const updateTrailerControlMode = () => {
+    const usesMobileControls = mobileTrailerControls?.matches || false;
+    trailerPlayers.forEach(player => {
+      player.video.controls = !usesMobileControls || player.showsNativeControls;
+      player.playToggle.hidden = !usesMobileControls;
+      player.controlsToggle.hidden = !usesMobileControls;
+      const controlsAction = player.showsNativeControls ? 'Hide controls' : 'More controls';
+      player.controlsToggle.textContent = controlsAction;
+      player.controlsToggle.setAttribute('aria-label', `${controlsAction} for ${player.video.getAttribute('aria-label')}`);
+    });
+  };
   let activeTrailer = null;
   const pauseOtherTrailers = selectedTrailer => {
     trailerPlayers.forEach(player => { if (player !== selectedTrailer) player.video.pause(); });
   };
   const updateTrailerPlayback = () => {
     const nextTrailer = document.hidden ? null :
-      activeTrailer?.isVisible ? activeTrailer : trailerPlayers.find(player => player.isVisible) || null;
+      activeTrailer?.isVisible ? activeTrailer : trailerPlayers.find(player => player.canAutoplay) || null;
     if (nextTrailer === activeTrailer) return;
     activeTrailer = nextTrailer;
     pauseOtherTrailers(activeTrailer);
@@ -37,7 +53,23 @@
     }
   };
   trailerPlayers.forEach(player => {
-    const { video, soundToggle } = player;
+    const { video, soundToggle, playToggle, controlsToggle } = player;
+    const updatePlaybackLabel = () => {
+      const playbackAction = video.paused ? 'Play' : 'Pause';
+      playToggle.textContent = playbackAction;
+      playToggle.setAttribute('aria-label', `${playbackAction} ${video.getAttribute('aria-label')}`);
+    };
+    playToggle.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().catch(updatePlaybackLabel);
+      } else {
+        video.pause();
+      }
+    });
+    controlsToggle.addEventListener('click', () => {
+      player.showsNativeControls = !player.showsNativeControls;
+      updateTrailerControlMode();
+    });
     const updateSoundLabel = () => {
       const isSilent = video.muted || video.volume === 0;
       const soundAction = isSilent ? 'Turn sound on' : 'Mute sound';
@@ -64,13 +96,20 @@
       activeTrailer = player;
       pauseOtherTrailers(player);
     });
+    video.addEventListener('play', updatePlaybackLabel);
+    video.addEventListener('pause', updatePlaybackLabel);
+    video.addEventListener('ended', updatePlaybackLabel);
+    updatePlaybackLabel();
     updateSoundLabel();
   });
+  updateTrailerControlMode();
+  mobileTrailerControls?.addEventListener?.('change', updateTrailerControlMode);
   if (observesTrailerVisibility) {
     const trailerVisibilityObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         const player = trailerPlayers.find(candidate => candidate.video === entry.target);
-        player.isVisible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+        player.isVisible = entry.isIntersecting;
+        player.canAutoplay = player.isVisible && entry.intersectionRatio >= 0.25;
       });
       updateTrailerPlayback();
     }, { threshold: [0, 0.25] });
