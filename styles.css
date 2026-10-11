@@ -25,6 +25,8 @@
 .trailer-player video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#080f20}
 .trailer-player video:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
 .trailer-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:12px 10px;color:var(--muted);font-size:.85rem;line-height:1.6}
+.trailer-player.uses-mobile-controls .trailer-controls{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility 0s .2s}
+.trailer-player.uses-mobile-controls.controls-visible .trailer-controls{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 .trailer-control{min-height:44px;border:1px solid var(--line);border-radius:6px;padding:8px 12px;background:#1c2d43;color:var(--white);font:inherit;cursor:pointer}
 .trailer-control:hover{border-color:var(--blue);color:var(--blue)}
 .trailer-control:focus-visible{outline:3px solid var(--orange);outline-offset:3px}

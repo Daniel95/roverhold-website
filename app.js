@@ -15,25 +15,57 @@
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
   const trailerPlayers = Array.from(document.querySelectorAll('.trailer-player')).map(container => ({
+    container,
     video: container.querySelector('video'),
+    controlBar: container.querySelector('.trailer-controls'),
     soundToggle: container.querySelector('.trailer-sound-toggle'),
     playToggle: container.querySelector('.trailer-play-toggle'),
     controlsToggle: container.querySelector('.trailer-controls-toggle'),
+    controlsHideTimer: null,
     showsNativeControls: false,
     isVisible: false,
     canAutoplay: false
   }));
   const observesTrailerVisibility = 'IntersectionObserver' in window;
   const mobileTrailerControls = 'matchMedia' in window ? window.matchMedia('(pointer: coarse), (max-width: 640px)') : null;
+  const updateNativeControlsLabel = player => {
+    const controlsAction = player.showsNativeControls ? 'Hide controls' : 'More controls';
+    player.controlsToggle.textContent = controlsAction;
+    player.controlsToggle.setAttribute('aria-label', `${controlsAction} for ${player.video.getAttribute('aria-label')}`);
+  };
+  const hideTrailerControls = player => {
+    window.clearTimeout(player.controlsHideTimer);
+    player.controlsHideTimer = null;
+    player.container.classList.remove('controls-visible');
+    player.controlBar.inert = mobileTrailerControls?.matches || false;
+    if (mobileTrailerControls?.matches) {
+      player.showsNativeControls = false;
+      player.video.controls = false;
+      updateNativeControlsLabel(player);
+    }
+  };
+  const showTrailerControls = player => {
+    if (!mobileTrailerControls?.matches) return;
+    window.clearTimeout(player.controlsHideTimer);
+    player.controlsHideTimer = null;
+    player.container.classList.add('controls-visible');
+    player.controlBar.inert = false;
+    // Keep Play reachable while paused and avoid interrupting keyboard or native seeking controls.
+    if (player.video.paused || player.showsNativeControls || player.container.querySelector(':focus-visible')) return;
+    player.controlsHideTimer = window.setTimeout(() => hideTrailerControls(player), 4000);
+  };
   const updateTrailerControlMode = () => {
     const usesMobileControls = mobileTrailerControls?.matches || false;
     trailerPlayers.forEach(player => {
-      player.video.controls = !usesMobileControls || player.showsNativeControls;
+      hideTrailerControls(player);
+      player.showsNativeControls = false;
+      player.container.classList.toggle('uses-mobile-controls', usesMobileControls);
+      player.video.controls = !usesMobileControls;
+      if (usesMobileControls) player.video.setAttribute('tabindex', '0');
+      else player.video.removeAttribute('tabindex');
       player.playToggle.hidden = !usesMobileControls;
       player.controlsToggle.hidden = !usesMobileControls;
-      const controlsAction = player.showsNativeControls ? 'Hide controls' : 'More controls';
-      player.controlsToggle.textContent = controlsAction;
-      player.controlsToggle.setAttribute('aria-label', `${controlsAction} for ${player.video.getAttribute('aria-label')}`);
+      updateNativeControlsLabel(player);
     });
   };
   let activeTrailer = null;
@@ -47,13 +79,28 @@
     activeTrailer = nextTrailer;
     pauseOtherTrailers(activeTrailer);
     if (activeTrailer) {
-      activeTrailer.video.play().catch(() => {
-        // If autoplay is blocked, native play controls remain available.
+      const selectedTrailer = activeTrailer;
+      selectedTrailer.video.play().catch(() => {
+        if (activeTrailer === selectedTrailer && !document.hidden) showTrailerControls(selectedTrailer);
       });
     }
   };
   trailerPlayers.forEach(player => {
-    const { video, soundToggle, playToggle, controlsToggle } = player;
+    const { container, video, controlBar, soundToggle, playToggle, controlsToggle } = player;
+    video.addEventListener('click', () => showTrailerControls(player));
+    video.addEventListener('keydown', event => {
+      if (mobileTrailerControls?.matches && !video.controls && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault();
+        showTrailerControls(player);
+      }
+    });
+    controlBar.addEventListener('click', () => showTrailerControls(player));
+    container.addEventListener('focusin', () => showTrailerControls(player));
+    container.addEventListener('focusout', () => {
+      window.setTimeout(() => {
+        if (container.classList.contains('controls-visible')) showTrailerControls(player);
+      }, 0);
+    });
     const updatePlaybackLabel = () => {
       const playbackAction = video.paused ? 'Play' : 'Pause';
       playToggle.textContent = playbackAction;
@@ -61,14 +108,19 @@
     };
     playToggle.addEventListener('click', () => {
       if (video.paused) {
-        video.play().catch(updatePlaybackLabel);
+        video.play().catch(() => {
+          updatePlaybackLabel();
+          if (!document.hidden && (!observesTrailerVisibility || player.isVisible)) showTrailerControls(player);
+        });
       } else {
         video.pause();
       }
     });
     controlsToggle.addEventListener('click', () => {
       player.showsNativeControls = !player.showsNativeControls;
-      updateTrailerControlMode();
+      video.controls = player.showsNativeControls;
+      updateNativeControlsLabel(player);
+      showTrailerControls(player);
     });
     const updateSoundLabel = () => {
       const isSilent = video.muted || video.volume === 0;
@@ -97,13 +149,25 @@
       pauseOtherTrailers(player);
     });
     video.addEventListener('play', updatePlaybackLabel);
+    video.addEventListener('play', () => {
+      if (container.classList.contains('controls-visible')) showTrailerControls(player);
+    });
     video.addEventListener('pause', updatePlaybackLabel);
+    video.addEventListener('pause', () => {
+      if (!document.hidden && (!observesTrailerVisibility || player.isVisible) && container.classList.contains('controls-visible')) showTrailerControls(player);
+      else hideTrailerControls(player);
+    });
     video.addEventListener('ended', updatePlaybackLabel);
     updatePlaybackLabel();
     updateSoundLabel();
   });
   updateTrailerControlMode();
   mobileTrailerControls?.addEventListener?.('change', updateTrailerControlMode);
+  document.addEventListener('pointerdown', event => {
+    trailerPlayers.forEach(player => {
+      if (!player.container.contains(event.target)) hideTrailerControls(player);
+    });
+  });
   if (observesTrailerVisibility) {
     const trailerVisibilityObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
