@@ -89,8 +89,8 @@
     const { container, video, controlBar, soundToggle, playToggle, controlsToggle } = player;
     video.addEventListener('click', () => showTrailerControls(player));
     video.addEventListener('keydown', event => {
-      if (mobileTrailerControls?.matches && !video.controls && (event.key === 'Enter' || event.key === ' ')) {
-        event.preventDefault();
+      if (mobileTrailerControls?.matches && !video.controls && (event.key === 'Enter' || event.key === ' ' || event.key === 'Tab')) {
+        if (event.key !== 'Tab') event.preventDefault();
         showTrailerControls(player);
       }
     });
