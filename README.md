@@ -83,7 +83,7 @@ Each player keeps inline portrait playback, muted looping and `preload="none"`. 
 
 On coarse-pointer devices or screens at most 640 pixels wide, tapping the video reveals Play/Pause, sound and **More controls** buttons below the footage. They fade after four seconds without interaction while playing, or when the visitor taps outside that player. Their space stays reserved so the page does not jump. They remain visible while paused or focused with the keyboard. **More controls** reveals the native player for seeking and fullscreen and keeps the buttons available until **Hide controls** or an outside tap returns to the clear video view. Desktop retains native controls. All players have native controls in HTML as the fallback when JavaScript is unavailable. If autoplay is blocked, the mobile Play button is revealed; without visibility observation, playback is manual. Visitors stay on the page; no standalone-video link is offered.
 
-Cache versions are `20261009-action-v15` for the primary video/poster and `20261010-base-v12` for the progression video/poster. The HTML versions JavaScript as `20261012-tap-controls-v2` and CSS as `20261012-tap-controls`.
+Cache versions are `20261009-action-v15` for the primary video/poster and `20261010-base-v12` for the progression video/poster. The HTML versions JavaScript as `20261012-tap-controls-v2` and CSS as `20261013-anchor-alignment`.
 
 Previous website media and verification artifacts remain under `.preview/`, including `two-trailers-20261009/previous-action-v13-web.mp4` and its poster, plus `base-trailer-v12-20261010/previous-base-v9-web.mp4` and its poster. The earlier supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remains untouched and ignored by Git.
 
