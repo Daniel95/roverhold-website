@@ -14,6 +14,24 @@
   mainNavigation.querySelectorAll('a').forEach(navigationLink => navigationLink.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
+  const mobileTrailerLayout = window.matchMedia?.('(max-width: 640px)');
+  const primaryTrailer = document.querySelector('#trailer .trailer-player');
+  const centerMobileTrailer = () => {
+    if (mobileTrailerLayout?.matches && window.location.hash === '#trailer') {
+      primaryTrailer.scrollIntoView({ block: 'center' });
+    }
+  };
+  document.querySelectorAll('a[href="#trailer"]').forEach(trailerLink => {
+    trailerLink.addEventListener('click', event => {
+      if (!mobileTrailerLayout?.matches || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      if (window.location.hash !== '#trailer') window.history.pushState(null, '', '#trailer');
+      if (event.detail === 0) primaryTrailer.querySelector('video').focus({ preventScroll: true });
+      centerMobileTrailer();
+    });
+  });
+  window.addEventListener('hashchange', centerMobileTrailer);
+  if (window.location.hash === '#trailer') window.addEventListener('load', centerMobileTrailer, { once: true });
   const trailerPlayers = Array.from(document.querySelectorAll('.trailer-player')).map(container => ({
     container,
     video: container.querySelector('video'),

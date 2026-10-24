@@ -38,6 +38,7 @@
 @media(max-width:1150px){.trailer-inner{gap:45px}}
 @media(max-width:850px){.trailer-inner{gap:30px}.trailer-copy>p{font-size:1rem}}
 @media(max-width:640px){.trailer-section{padding-block:60px}.trailer-inner{grid-template-columns:1fr;gap:35px}.trailer-copy{text-align:center}.trailer-copy>p{margin-inline:auto}}
+@media(max-width:640px){.trailer-player{display:flex;flex-direction:column;max-height:calc(100vh - 32px);max-height:calc(100svh - 32px)}.trailer-player video{min-height:0;flex:1 1 auto}.trailer-player figcaption,.trailer-controls{flex-shrink:0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 
 .base-inner{row-gap:30px}
