@@ -63,22 +63,22 @@ The earlier combat and base captures used the existing save in isolated `Existin
 
 ## Trailer delivery
 
-The website contains the two approved 30-second trailers supplied on 2026-10-26: Gameplay & Action V4 and Base Building & Progression / Overview V7. Action V4 adds the matching clean blue ROVERHOLD opening: gameplay reveals over 0.6 seconds, the title holds until 1.6 seconds and fades out by 2 seconds. Its competing opening Move your base caption is removed; the finale caption, all footage, timing, current upgrade UI and audio remain as in V3. Overview V7 includes base building, movement/mining, a boss encounter, and later Colossus placement and firing. Website preparation preserves the selected exports' shots, timing, captions and encoded audio. Both use real Unity Editor captures. The overview video/poster and upgrade gallery images remain unchanged.
+The website contains the two approved 30-second V9 trailers supplied on 2026-10-28: Gameplay & Action and Base Building & Progression / Overview. Action V9 shows genuine unpressed green/blue/gold upgrade choices at 6–8 seconds, followed by the existing advanced multi-barrel shot captioned Add more barrels at 8–12 seconds. It remains a montage of separate progression captures. Overview V9 has the closer moving-base opening and continuous approach/stop/mining sequence, with the boss at 18.5–22 seconds followed by the explicitly later Colossus placement/firing at 22–28 seconds. Both retain the blue ROVERHOLD opening, gameplay reveal and title fade. Website preparation preserves their shots, timing, captions, colours and encoded audio while optimizing delivery. Both use real Unity Editor captures. Screenshots and other site content remain unchanged.
 
 | Website placement | Supplied master | Website video | Web size | Poster frame |
 | --- | --- | --- | --- | --- |
-| After the hero: Gameplay & Action | `roverhold-action-google-play-30s-v4.mp4`, 30 seconds | `assets/trailer.mp4` | 13,156,813 bytes | 2.3 seconds: moving base after the opening title |
-| In Your Base: Base Building & Progression | `roverhold-overview-google-play-30s-v7.mp4`, 30 seconds | `assets/base-trailer.mp4` | 9,450,342 bytes | 6 seconds: Build your base |
+| After the hero: Gameplay & Action | `roverhold-action-google-play-30s-v9.mp4`, 30 seconds | `assets/trailer.mp4` | 13,003,329 bytes | 2.3 seconds: moving base after the opening title |
+| In Your Base: Base Building & Progression | `roverhold-overview-google-play-30s-v9.mp4`, 30 seconds | `assets/base-trailer.mp4` | 9,882,394 bytes | 6.5 seconds: Build your base |
 
-Both selected 1080×1920 source exports remain unchanged outside the repository. Local archive copies are retained in the ignored `.preview/action-title-v4-20261026/action-master-30s-v4.mp4` and `.preview/two-trailers-30s-20261026/overview-master-30s.mp4`. Their SHA-256 hashes are:
+Both selected 1080×1920 source exports remain unchanged outside the repository. Local archive copies are retained in the ignored `.preview/final-v9-20261028/action-master-30s-v9.mp4` and `.preview/final-v9-20261028/overview-master-30s-v9.mp4`. Their SHA-256 hashes are:
 
-- Action V4: `ddfd0db8648ad387a5c6beda0caa2258c2e0ee32cb1a905f4bb6e353a9a6d865`
-- Overview V7: `1e6394587b8d2ce6ee43d034e04b57a6aaeeddf9935b7b9175bf5dc5d4a4dcd5`
+- Action V9: `32d343b9818da87b6e1e9f53c76037c04a286f2d1206fc9dee1c2b9c08eb62b9`
+- Overview V9: `c717d3b17d08f203fd3b2e3d694942623ab1644b5d0b9ef3deb6340985c85211`
 
-The website copies are 720x1280 H.264 Main/AAC at 30 FPS, approximately 69% and 77% smaller than their selected sources. Each retains all 900 source frames and exactly 30 seconds of video/container duration. Audio is copied without re-encoding; copied audio packet hashes match the respective sources. Both MP4 files place metadata before video data for progressive playback. The matching WebP posters are 114,082 and 117,320 bytes. Delivery SHA-256 hashes are:
+The website copies are 720x1280 H.264 Main/AAC at 30 FPS, approximately 69% and 76% smaller than their selected sources. Each retains all 900 source frames and exactly 30 seconds of video/container duration. Audio is copied without re-encoding; copied audio packet hashes match the respective sources. Both MP4 files place metadata before video data for progressive playback. The matching WebP posters are 110,124 and 117,698 bytes. Delivery SHA-256 hashes are:
 
-- Action web copy: `fd2acb2dbecdb2d68fb050c78bd53ca2686e8aaaafd26e4dba0c6adae4fdc906`
-- Overview web copy: `354bf7000609a48d9ea5771a2e624bd16d266a2d9f5ab6a02238b156e0d79909`
+- Action web copy: `328b44c61460c79f4a998ec3d7c8651edfa20ef40b2bfd12f63c217d401d2e59`
+- Overview web copy: `9f0a462bb7323c397079da75643a7b484d7de01d3b67667895efaef41dca7afe`
 
 The action trailer stays immediately after the hero to introduce combat. The progression trailer sits beside the existing explanation of permanent base growth and movement. The base screenshot remains in the hero and gallery. On mobile, the base copy comes first, followed by its video and then the next-section button, so the button does not skip the progression footage.
 
@@ -88,15 +88,15 @@ On coarse-pointer devices or screens at most 640 pixels wide, tapping the video 
 
 At widths through 640 pixels, the Trailer and Watch the trailer links center the primary player in the viewport. The heading and introduction remain above it in the normal page flow. Trailer navigation keeps its `#trailer` URL, supports repeat clicks and history navigation, and uses the existing CSS smooth-scrolling/reduced-motion preference. Both mobile players fit within the small viewport height with 16 pixels of space above and below; the full video frame remains visible with letterboxing when needed, and the caption and controls keep their normal sizes. Other section links and desktop trailer navigation retain section-top alignment.
 
-Cache versions are `20261026-action-30s-v4` for the primary video/poster and `20261026-overview-30s-v7` for the progression video/poster. The unchanged upgrade display and gallery images, plus JavaScript, remain at `20261025-current-ui`. CSS remains at `20261024-mobile-trailer` because the layout is unchanged.
+Cache versions are `20261028-action-30s-v9` for the primary video/poster and `20261028-overview-30s-v9` for the progression video/poster. The unchanged upgrade display and gallery images, plus JavaScript, remain at `20261025-current-ui`. CSS remains at `20261024-mobile-trailer` because the layout is unchanged.
 
-The previous 30-second Action V3 website video/poster are archived in `.preview/action-title-v4-20261026/previous-v3-*`, with its source preserved in `.preview/two-trailers-30s-20261026/`. The earlier 42-second action V16 and 45-second Galactic Progression V12 website videos/posters remain in `.preview/two-trailers-30s-20261026/previous-*`. Their original masters and older verification artifacts remain under `.preview/action-trailer-v16-20261025/`, `.preview/base-trailer-v12-20261010/` and `.preview/two-trailers-20261009/`. Earlier upgrade screenshots and the supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remain untouched; temporary media stays ignored by Git.
+The previous Action V4 and Overview V7 website videos/posters are archived in `.preview/final-v9-20261028/previous-*`. Their source masters and the earlier V3, 42-second action V16 and 45-second Galactic Progression V12 media remain in the existing ignored `.preview/` archives. Earlier upgrade screenshots and the supplied `assets/roverhold-trailer-sfx-shot-level-v11.mp4` remain untouched; temporary media stays ignored by Git.
 
 FFmpeg is an optional media preparation tool, not a website runtime or build dependency. These selected sources already have a constant 30 FPS. Scale without a frame-rate filter or trim, and pass through their presentation timestamps to retain every frame:
 
 ```powershell
-ffmpeg -i .preview/action-title-v4-20261026/action-master-30s-v4.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos" -fps_mode passthrough -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/trailer.mp4
-ffmpeg -i .preview/two-trailers-30s-20261026/overview-master-30s.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos" -fps_mode passthrough -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/base-trailer.mp4
+ffmpeg -i .preview/final-v9-20261028/action-master-30s-v9.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos" -fps_mode passthrough -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/trailer.mp4
+ffmpeg -i .preview/final-v9-20261028/overview-master-30s-v9.mp4 -map 0:v:0 -map 0:a:0 -vf "scale=720:1280:flags=lanczos" -fps_mode passthrough -c:v libx264 -preset medium -crf 23 -profile:v main -pix_fmt yuv420p -c:a copy -movflags +faststart assets/base-trailer.mp4
 ```
 
 Temporary masters, review captures, tools and media/playback verification reports live in the ignored `.preview/` folder. Keep original media when preparing new website copies. No store download URLs or release dates have been supplied.
